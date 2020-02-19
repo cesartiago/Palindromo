@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int main()
+{
+    int i, n, j;
+    char Frase[281]; //Vetor de characters (terminando em '/0')
+    cout << "Digite sua frase sem acentos"<< endl;
+
+    char ch [23] = {' ', '.', ',', ';', ':', '?', ';', '!', '«', '»',
+    '"', '"', ')', '—', '–', '—', '[' , ']' , '*', '/', '{', '}'}; // (22+1 até '}') O que queremos remover da frase (terminando em '/0' por isso o 4, e nao 3 - eh sempre bom lembrar ne)
+
+    // Testar se quiser: cout << ch [21] << Frase << endl;
+
+    cin.getline(Frase, 281);
+    //Pega a frase
+
+                                /* --------    REMOVEDOR  --------   */
+    for (int h = 0; h<22; h++)
+    {
+
+
+    n=strlen(Frase); //n eh um inteiro que armazena o tamanho da frase
+        for (i = 0, j=0; i<n; i++)
+        {
+            if (Frase[i] != ch [h]) //Se na posicao "i" NÃO ESTIVER caracteres como -> Espaço, ponto etc
+            {
+                Frase[j]=Frase[i]; //O caractere fica ali. A SACADA TÁ AQUI. SE O CARACTERE FOR O QUE A GENTE QUER TIRAR, ele nao voltara para a sua posicao inicial, o proximo que entrara em seu lugar!!! (Esse proximo deve ser diferente do caractere que nao queremos)
+                j++; //SÓ SOMA A "j" SE FOR DIFERENTE DO "CH". Assim o "i" uma hora passara o "j", fazendo as substituicoes
+            }
+        }
+        Frase [j] ='\0'; //Para terminar nossa frase após "mover o último caractere para a esquerda", você adiciona o final de um char (o '\0') na posicao j em que ele acabou de fazer as substituicoes, para fechar o seu comprimento "length" como deve ser em tal frase final.
+    }
+
+     //REMOVIDO
+
+
+
+                                /* --------    CRIANDO FRASE INVERTIDA e COMPARANDO-AS  --------   */
+    char FraseInvertida [281]; //Vetor de characters (terminando em '/0')
+
+    int vetor =0;
+    int jAux = j;
+    cout << jAux << endl;
+    for (vetor =0; vetor<n; vetor++, jAux--)
+        {
+        FraseInvertida [vetor] = Frase [jAux-1]; // -1 por cauda da posiciao MAXIMA dentro do vetor ser de j-1
+        }
+        FraseInvertida [j] ='\0';
+
+    cout << "Frase Invertida" << FraseInvertida << endl;
+
+    int compara = strcmp(Frase, FraseInvertida); //Compara as 2 Frases
+
+    if (compara == 0)
+        {
+            cout << "A frase e um palindromo " << endl;
+        }
+    else
+        {
+            cout << "A frase NAO e um palindromo " << endl;
+        }
+
+
+    return 0;
+
+}
